@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+</head>
+<body>
+    <div style="display: flex;justify-content:center;align-items: center;flex-direction: column;">
+        <h1>Grade Calculator</h1><br><br>
+        <input style="padding: 10px;" type="number" id="obtainMarks" placeholder="Enter Obtained Marks"  />
+        <br><br>
+        <input style="padding: 10px;" type="number" id="totalMarks" placeholder="Enter Total Marks" />
+        <br><br>
+        <button style="padding: 10px;" id="calculate" onclick="calculateGrade()">Calculate Grade</button>
+
+        <div style="margin: 30px;font-weight: 700;font-size: 24px;" id="user-persentage"></div>
+        
+    </div>
+
+    <script>
+        let obtainMarks = document.getElementById("obtainMarks")
+        let totalMarks = document.getElementById("totalMarks")
+        
+        function calculateGrade(){
+            if(obtainMarks.value > totalMarks.value){
+                obtainMarks.value = 0;
+                alert("obtain marks must be less than total marks");
+                return;
+            }
+            let persentage = (obtainMarks.value/totalMarks.value) * 100;
+            let grade = '';
+            if(persentage>= 90){
+                grade = 'A 🥳 ';
+            }else if(persentage < 90 && persentage >= 80){
+                grade = 'B 👍';
+            }else if(persentage < 80 && persentage >= 70 ){
+                grade = 'C 👎';
+            }else if(persentage < 70 && persentage >= 60){
+                grade = 'D 🖐';
+            }else {
+                grade = 'F 😞'
+            }
+
+            document.getElementById("user-persentage").innerText = `Your Persentage : ${persentage}% Grade: ${grade}`;
+         }
+
+    </script>
+</body>
+</html>

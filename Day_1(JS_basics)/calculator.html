@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calulator</title>
+</head>
+<body>
+    <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+        <h1>Calculator (+,-,*,/)</h1>
+    <div>
+        <input style="padding: 10px;outline: none;" type="number" id="input1" value="3" />
+        <br><br>
+        <input style="padding: 10px;outline: none;" type="number" id="input2" value="4" />
+        <br><br>
+        <input style="padding: 10px;outline: none;" type="text" id="oprt" value="+" />
+        <br><br>
+    </div>
+    
+    <button style="padding: 10px;" id="calculate" onclick="calculate()">calculate</button>
+    <br><br>
+    <div id="ans" style="font-size: 24px; font-weight: 900;"></div>
+    </div>
+    <script>
+        function calculate(){
+            let num1 = document.getElementById("input1")
+            let num2 = document.getElementById("input2")
+            let oprt = document.getElementById("oprt")
+            console.log(num1.value + " " + num2.value + " "  + oprt.value);
+            let answer=0;
+            console.log(oprt.value);
+            if(oprt.value=='+'){
+                answer = num1.value + num2.value;
+            }else if(oprt.value=='-'){
+                answer = num1.value - num2.value;
+            }else if(oprt.value == '*'){
+                answer = num1.value * num2.value;
+            }else if(oprt.value == '/'){
+                answer = num1.value/num2.value;
+            }else{
+                alert("Wrong Operator");
+                return;
+            }
+        
+            document.getElementById("ans").innerText = `${answer}`
+        }
+      
+
+    </script>
+</body>
+</html>
