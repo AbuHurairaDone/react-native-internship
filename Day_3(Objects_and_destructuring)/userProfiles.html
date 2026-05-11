@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profiles</title>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center;justify-content: center;">
+        <div id="userprofiles">
+
+        </div>
+    </div>
+    <script>
+        const userProfiles = [
+          {
+            uid: "a1b2-c3d4-e5f6",
+            personalInfo: {
+              firstName: "Elena",
+              lastName: "Rodriguez",
+              displayName: "ERodriguez_Arch",
+              avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Elena"
+            },
+            contact: {
+              email: "elena.rod@architech.io",
+              phone: "+34 612 345 678",
+              location: {
+                city: "Barcelona",
+                country: "Spain",
+                timezone: "Europe/Madrid"
+              }
+            },
+            professional: {
+              role: "Senior Architect",
+              company: "ArchiTech Solutions",
+              skills: ["AutoCAD", "Revit", "Sustainable Design"],
+              yearsExperience: 12
+            },
+            accountStatus: "active",
+            lastLogin: "2024-05-10T14:30:00Z"
+          },
+          {
+            uid: "g7h8-i9j0-k1l2",
+            personalInfo: {
+              firstName: "Marcus",
+              lastName: "Thorne",
+              displayName: "MThorne_UX",
+              avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus"
+            },
+            contact: {
+              email: "m.thorne@designflow.com",
+              phone: "+44 20 7946 0958",
+              location: {
+                city: "London",
+                country: "United Kingdom",
+                timezone: "Europe/London"
+              }
+            },
+            professional: {
+              role: "UX Researcher",
+              company: "DesignFlow",
+              skills: ["User Interviewing", "Figma", "Behavioral Psychology"],
+              yearsExperience: 5
+            },
+            accountStatus: "away",
+            lastLogin: "2024-05-09T18:15:00Z"
+          },
+          {
+            uid: "m3n4-o5p6-q7r8",
+            personalInfo: {
+              firstName: "Aiko",
+              lastName: "Tanaka",
+              displayName: "AikoDataSci",
+              avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aiko"
+            },
+            contact: {
+              email: "aiko.tanaka@quantum-net.jp",
+              phone: "+81 3 1234 5678",
+              location: {
+                city: "Tokyo",
+                country: "Japan",
+                timezone: "Asia/Tokyo"
+              }
+            },
+            professional: {
+              role: "Data Scientist",
+              company: "QuantumNet",
+              skills: ["Python", "TensorFlow", "Quantum Computing"],
+              yearsExperience: 8
+            },
+            accountStatus: "busy",
+            lastLogin: "2024-05-11T09:00:00Z"
+          }
+        ];
+          
+        function renderProfile({ personalInfo, accountStatus, contact, professional, uid }){
+            return `
+                <article style="width: 280px; border: 1px solid #d1d5db; border-radius: 16px; background: #ffffff; padding: 16px; box-shadow: 0 10px 20px rgba(0,0,0,.08); margin: 10px;">
+                    <div style="text-align: center; margin-bottom: 14px;">
+                        <img src="${personalInfo.avatar}" alt="${personalInfo.displayName}" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px;" />
+                        <h2 style="margin: 0 0 6px; font-size: 1.1rem;">${personalInfo.displayName}</h2>
+                        <p style="margin: 0; color: #6b7280;">${personalInfo.firstName} ${personalInfo.lastName}</p>
+                    </div>
+                    <div style="font-size: 0.95rem; color: #111827; line-height: 1.5;">
+                        <p><strong>Status:</strong> ${accountStatus}</p>
+                        <p><strong>Email:</strong> ${contact.email}</p>
+                        <p><strong>Phone:</strong> ${contact.phone}</p>
+                        <p><strong>Location:</strong> ${contact.location.city}, ${contact.location.country}</p>
+                        <p><strong>Role:</strong> ${professional.role}</p>
+                        <p><strong>Company:</strong> ${professional.company}</p>
+                        <p><strong>Skills:</strong> ${professional.skills.join(', ')}</p>
+                        <p><strong>UID:</strong> ${uid}</p>
+                    </div>
+                </article>`;
+        }
+        function renderProfiles(){
+            document.getElementById("userprofiles").innerHTML = userProfiles.map(profile => renderProfile(profile)).join('');
+        }       
+        renderProfiles();
+    </script>
+</body>
+</html>

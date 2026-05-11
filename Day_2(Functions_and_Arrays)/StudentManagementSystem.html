@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Management Sys</title>
 </head>
 <body>
     <div style="display: flex;justify-content: center;align-items: center; flex-direction: column;">
@@ -61,7 +61,7 @@
             Sage.value ="";
             Semail.value ="";
             Sid.value ="";
-            
+
             students.push(student);
             renderStudents()
         }
@@ -69,7 +69,7 @@
             studentList.innerHTML = students.map((student) => {
                 return `<div style="padding:10px; background-color:grey;display:flex;justify-content:center; align-items:center; flex-direction:column; width:400px;margin-top:5px;">
                             <div style="display:flex;justify-content:space-between;width:100%">
-                                <p>ID: ${student.id}</p>
+                                <p>ID: <span style="color: rgb(2, 197, 2);">${student.id}</span></p>
                                 <p>Name: ${student.name}</p>
                                 <p>Email: ${student.email}</p>
                                 <p>Age: ${student.age}</p>
@@ -100,7 +100,7 @@
             foundStudents = students.filter((student)=> student.name == studentName);
             if(foundStudents.length == 0){studentList.innerHTML = `<p>Student Not Found</p> <button onclick="renderStudents()">Show All Students</button>`;return;}
             studentList.innerHTML = foundStudents.map((student) => {
-                return `<div style="padding:10px; background-color:grey;display:flex;justify-content:center; align-items:center; flex-direction:column; width:400px;margin-top:5px;">
+                return `<div style="padding:10px; background-color: rgb(224, 223, 223);display:flex;justify-content:center; align-items:center; flex-direction:column; width:400px;margin-top:5px;">
                             <div style="display:flex;justify-content:space-between;width:100%">
                                 <p>ID: ${student.id}</p>
                                 <p>Name: ${student.name}</p>
