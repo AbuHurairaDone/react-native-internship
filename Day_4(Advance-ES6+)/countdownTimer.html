@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 36px;
+        }
+        #timer {
+            font-size: 72px;
+            font-weight: 700;
+            color: #667eea;
+            margin: 24px 0;
+            line-height: 1.2;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-group {
+            margin-bottom: 28px;
+        }
+        #time {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        #time:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        button {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #startBtn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #startBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        #startBtn:active {
+            transform: translateY(0);
+        }
+        #stopBtn {
+            background: #ff6b6b;
+            color: white;
+        }
+        #stopBtn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+        #stopBtn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⏱️ Countdown Timer</h1>
+        <p>Enter seconds and start the countdown</p>
+        <div id="timer">0</div>
+        <div class="input-group">
+            <input type="number" id="time" placeholder="Enter Time in Seconds" value="60" min="1" />
+        </div>
+        <div class="button-group">
+            <button id="startBtn" onclick="StartTimer()">Start</button>
+            <button id="stopBtn" onclick="StopTimer()">Stop</button>
+        </div>
+    </div>
+
+    <script>
+        let timer = document.getElementById('timer');
+        let timeInput = document.getElementById("time");
+        let timerInterval = null;
+
+        let remind;
+
+        function countdownTimer(time){
+            timerInterval = setInterval(()=>{
+                updateUI(time);
+                time--;
+                if(time == -2){
+                    timer.innerText = "Times Up";        
+                    clearInterval(timerInterval);
+                }
+            },1000)
+        }
+        
+        function updateUI(time){
+            remind = time;
+            timer.innerText = time; 
+        }
+        function StartTimer(){
+            countdownTimer(parseInt(timeInput.value));
+        }
+        function StopTimer(){
+            if(timerInterval){
+                timeInput.value = remind;
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }     
+    </script>
+</body>
+</html>

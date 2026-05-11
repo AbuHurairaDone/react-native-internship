@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Api Simulation</title>
+</head>
+<body>
+    <div style="display: flex;flex-direction: column; align-items: center;justify-content: center;">
+        <div id="data">loading...</div>
+    </div>
+    <script>
+        const data = [
+            {name:"Hamza", age:15, salary:50000},
+            {name:"Hassan", age:34, salary:50000},
+            {name:"Ali", age:35, salary:50000},
+            {name:"Zain", age:55, salary:50000},
+            {name:"Huraira", age:34, salary:50000},
+            {name:"Sameer", age:25, salary:50000},
+            {name:"huzaifa", age:23, salary:50000}
+        ]
+        function fetchUsers(){
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(data);
+                }, 2000);
+            });
+        }
+       
+
+        async function displayUsers(){
+            const users = await fetchUsers();
+            console.log(users);
+            document.getElementById("data").innerHTML = users.map((user)=>{
+                return `<h3>${user.name} - ${user.age} - ${user.salary}</h3><br>`
+            }).join('')
+        }
+        displayUsers()
+    </script>
+</body>
+</html>
