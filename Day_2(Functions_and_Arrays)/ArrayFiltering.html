@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Filtering</title>
+</head>
+<body>
+    <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+         <p>Array : </p>
+        <p id="array" style="display: flex;"> </p>
+        <br><br>
+        <p>Map Function : </p>
+        <p id='map' id="array" style="display: flex;"></p>
+        <br><br>
+        <p>Filter Function (even) : </p>
+        <p id="filter" id="array" style="display: flex;"></p>
+        <br><br>
+        <p>Reduce Function : </p>
+        <p id="reduce" id="array" style="display: flex;"></p>
+    </div>
+    <script>
+        let array = [1,2,3,4,5,6,7,8,9,10]
+        document.getElementById('array').innerHTML = `{ ${array.map((item, index)=> { return `<p style="margin:0;">${item}</p>`}).join(', ')} }`
+        document.getElementById('map').innerHTML = `{ ${array.map((item, index)=> { return `<p style="margin:0;">${item+index}</p>`}).join(', ')} }`
+        document.getElementById('filter').innerHTML = `{ ${array.filter((item)=>item%2==0).map((item)=> { return `<p style="margin:0;">${item}</p>`}).join(', ')} }`
+        sum = array.reduce((acc,curr)=> acc+curr)
+        document.getElementById('reduce').innerHTML = `${sum}`
+    </script>
+</body>
+</html>

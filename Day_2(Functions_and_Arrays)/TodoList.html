@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+</head>
+<body>
+    <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+        <h1>Todo List App</h1>
+        <div>
+            <input style="padding: 10px;" type="text" id="TodoText" placeholder="Enter Todo">
+            <button style="padding: 10px;" type="button" id="createTodoButton" onclick="createTodo()">Create Todo</button>
+        </div>
+
+        <div style="margin-top: 20px;" id="TodoList">
+            
+        </div>
+    </div>
+    <script>
+
+        let todos = [];
+
+        let TodoText = document.getElementById("TodoText");
+        let createTodoButton = document.getElementById("createTodoButton");
+        let TodoList = document.getElementById("TodoList");
+
+        function createTodo(){
+            if(TodoText.value.trim() === ''){
+                alert("input field is empty")
+                return;
+            }
+            let obj = {text: TodoText.value.trim(), id: Date.now()}
+            todos.push(obj);
+            TodoText.value = '';
+            renderTodos();
+        }
+
+        function renderTodos(){
+            TodoList.innerHTML = todos.map((item) => {
+                return `<div style="padding:10px; background-color:grey;display:flex;justify-content:space-between; align-items:center;  width:400px;margin-top:5px;">
+                            <p>${item.text}</p>
+                            <div>
+                                <button onclick="deleteItem(${item.id})">delete</button>
+                                <button onclick="editItem(${item.id})">Edit</button>
+                            </div>
+                        </div>`
+            }).join('');
+            console.log(TodoList);
+        }
+        function deleteItem(id){
+            todos = todos.filter((item)=> item.id !== id )
+            renderTodos();
+        }
+        function editItem(id){
+            const itemText = todos.filter((item)=> item.id === id);
+            todos = todos.filter((item)=> item.id !== id );
+            renderTodos();
+            TodoText.value = itemText[0].text;
+        }
+    </script>
+</body>
+</html>

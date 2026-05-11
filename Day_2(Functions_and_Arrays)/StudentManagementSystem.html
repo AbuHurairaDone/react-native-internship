@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display: flex;justify-content: center;align-items: center; flex-direction: column;">
+        <h1>Student Management System</h1>  
+        <div id="addStudent">
+            <input value="hamaz" type="text" name="name" id="name" placeholder="Enter Student Name" style="padding: 5px;outline: none;" />
+            <br><br>
+            <input value="23" type="number" name="age" id="age" placeholder="Enter Student Age" style="padding: 5px;outline: none;" />
+            <br><br>
+            <input value="hamza@gmail.com" type="text" name="email" id="email" placeholder="Enter Student Email" style="padding: 5px;outline: none;" />
+            <br><br>
+            <input type="number" name="id" id="id" placeholder="Enter Student ID" style="padding: 5px;outline: none;" />
+            <br><br>
+            <button type="button" id="addStudent" onclick="addStudent()" style="padding: 5px;outline: none;"> Add Student </button>  
+        </div>
+        <div id="searchContainer" style="margin-top: 15px;outline: none;">
+            <input type="text" name="seacrh" id="search" placeholder="Search by Name" style="padding: 5px;outline: none;" />
+            <button onclick="search()" type="button" id="searchButton" style="padding: 5px;outline: none;" >Search</button>
+        </div>
+        <div id="studentList"></div>   
+    </div>
+
+    <script>
+        let Sname = document.getElementById("name")
+        let Sage = document.getElementById("age")
+        let Semail = document.getElementById("email")
+        let Sid = document.getElementById("id")
+
+        let searchText = document.getElementById("search");
+
+
+        let studentList = document.getElementById("studentList");
+
+
+        let students = [];
+        function addStudent(){
+            if(Sname.value.trim() == ''){alert("Please Enter Name. ");return;}
+            if(Sage.value.trim() == ''){alert("Please Enter Age. ");return;}
+            if(Semail.value.trim() == ''){alert("Please Enter Email. ");return;}
+            if(Sid.value.trim() == ''){alert("Please Enter Id. ");return;}
+
+            let checkid = students.filter((student)=>student.id == Sid.value);
+            if(checkid.length!=0){
+                alert("id exist in DB.");
+                return;
+            } 
+
+            const student = {
+                name:Sname.value,
+                email:Semail.value,
+                age:Sage.value,
+                id:Sid.value
+            }
+            Sname.value="";
+            Sage.value ="";
+            Semail.value ="";
+            Sid.value ="";
+            
+            students.push(student);
+            renderStudents()
+        }
+        function renderStudents(){
+            studentList.innerHTML = students.map((student) => {
+                return `<div style="padding:10px; background-color:grey;display:flex;justify-content:center; align-items:center; flex-direction:column; width:400px;margin-top:5px;">
+                            <div style="display:flex;justify-content:space-between;width:100%">
+                                <p>ID: ${student.id}</p>
+                                <p>Name: ${student.name}</p>
+                                <p>Email: ${student.email}</p>
+                                <p>Age: ${student.age}</p>
+                            </div>
+                            <div>
+                                <button onclick="deleteStudent(${student.id})">delete</button>
+                                <button onclick="editStudent(${student.id})">Edit</button>
+                            </div>
+                        </div>`
+            }).join('');
+        }
+
+        function deleteStudent(id){
+            students = students.filter((student)=> student.id != id )
+            renderStudents();
+        }
+        function editStudent(id){
+            const student = students.filter((student)=> student.id == id);
+            students = students.filter((student)=> student.id != id );
+            renderStudents();
+            Sname.value = student[0].name;
+            Sage.value = student[0].age;
+            Semail.value = student[0].email;
+            Sid.value = student[0].id; 
+        }
+        function search(){
+            let studentName = searchText.value;
+            foundStudents = students.filter((student)=> student.name == studentName);
+            if(foundStudents.length == 0){studentList.innerHTML = `<p>Student Not Found</p> <button onclick="renderStudents()">Show All Students</button>`;return;}
+            studentList.innerHTML = foundStudents.map((student) => {
+                return `<div style="padding:10px; background-color:grey;display:flex;justify-content:center; align-items:center; flex-direction:column; width:400px;margin-top:5px;">
+                            <div style="display:flex;justify-content:space-between;width:100%">
+                                <p>ID: ${student.id}</p>
+                                <p>Name: ${student.name}</p>
+                                <p>Email: ${student.email}</p>
+                                <p>Age: ${student.age}</p>
+                            </div>
+                            <div>
+                                <button onclick="deleteStudent(${student.id})">delete</button>
+                                <button onclick="editStudent(${student.id})">Edit</button>
+                            </div>
+                        </div>`
+            }).join('');
+       }
+    </script>
+</body>
+</html>
