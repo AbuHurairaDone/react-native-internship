@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        .input{
+            padding: 10px;
+            margin-top: 10px;
+            width: 300px;
+            border: 1px solid gray;
+            border-radius: 10px;
+            box-shadow: black; 
+            outline: none;
+        }
+        .addExpButton{
+            padding: 10px 15px;
+            margin-top: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            background-color: rgb(44, 44, 255);
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .addExpButton:hover{
+            background-color: rgb(19, 19, 226);
+        }
+        .totalExpense{
+            width: 420px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        #totalExpence, #totalCategories{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            height: 100px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        #totalExpence{background-color: #ff6b6b;}
+        #totalCategories{background-color: rgb(160, 160, 253);}
+        .showCategoryButton{
+            margin-top: 14px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .showCategoryButton:hover{
+            background: #4338ca;
+        }
+        .modal-overlay{
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 999;
+        }
+        .modal-overlay.active{
+            display: flex;
+        }
+        .modal-card{
+            width: min(800px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 25px 80px rgba(15, 23, 42, 0.25);
+        }
+        .modal-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .modal-header h2{
+            margin: 0;
+            font-size: 22px;
+            color: #111827;
+        }
+        .modal-close{
+            border: none;
+            background: #ef4444;
+            color: white;
+            border-radius: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+        }
+        .modal-buttons{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .categoryButton{
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #4f46e5;
+            background: white;
+            color: #4338ca;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .categoryButton:hover{
+            background: #eef2ff;
+            transform: translateY(-1px);
+        }
+        .category-summary{
+            display: flex;
+            gap: 16px;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+        .category-summary span{
+            color: #374151;
+        }
+        .category-expenses {
+            display: grid;
+            gap: 14px;
+        }
+        .category-expense-item{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            /* background: #f8fafc; */
+        }
+        .category-expense-item p{
+            margin: 0;
+            color: #1f2937;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;justify-content: center;align-items: center; flex-direction: column;">
+        <h1>Expense Tracker App</h1>
+        <div id="addExpense" style="margin: 10px; display: flex;flex-direction: column; align-items: center;">
+            <input class="input" type="text" id="title" placeholder="Enter Title" value="Egg" />
+            <input class="input" type="text" id="category" placeholder="Enter Category" value="Groc" />
+            <input class="input" type="number" id="amount" placeholder="Enter Amount" value="50" />
+            <button  class="addExpButton" type="button" onclick="addExpense()" id="addExpenseButton" >Add Expense</button>
+        </div>
+        <div class="totalExpense">
+            <p id="totalExpence">Total Expense: Rs 0</p>
+            <p id="totalCategories">Total Categories: 0</p>
+        </div>
+        <button class="showCategoryButton" type="button" onclick="openCategoryModal()">Show Expenses Category Wise</button>
+        <div id="allExpensesContainer">
+            <div style="display:flex;justify-content:space-between;width:400px;padding:10px;margin-left: 10px;">
+                <p style="font-weight: 700;">ID</p>
+                <p style="font-weight: 700;">Title</p>
+                <p style="font-weight: 700;">Category</p>
+                <p style="font-weight: 700;">Amount</p>
+            </div>
+            <div id="allExpenses"></div>
+        </div>
+
+        <div id="categoryModal" class="modal-overlay" onclick="closeCategoryModal(event)">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <div>
+                        <h2>Category Expense Summary</h2>
+                        <div class="category-summary">
+                            <span id="modalTotalCategories">Categories: 0</span>
+                            <span id="modalTotalAmount">Total Expense: Rs0</span>
+                        </div>
+                    </div>
+                    <button class="modal-close" type="button" onclick="closeCategoryModal()">Close</button>
+                </div>
+                <div class="modal-buttons" id="categoryButtons"></div>
+                <div id="categoryContent">
+                    <div id="selectedCategoryTitle" style="margin-bottom: 14px; font-weight: 700; color: #111827;"></div>
+                    <div id="selectedCategoryTotal" style="margin-bottom: 18px; color: #374151; font-weight: 700;"></div>
+                    <div class="category-expenses" id="categoryExpenses"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let Eid = document.getElementById("id"); // Note: No element with id="id" exists
+        let title = document.getElementById("title");
+        let amount = document.getElementById("amount");
+        let category = document.getElementById("category");
+        let addExpenseButton = document.getElementById("addExpenseButton");
+        let allExpenseList = document.getElementById("allExpenses")
+        let categoryButtons = document.getElementById("categoryButtons");
+        let categoryExpenses = document.getElementById("categoryExpenses");
+        
+        let categoryModal = document.getElementById("categoryModal");
+        let modalTotalCategories = document.getElementById("modalTotalCategories");
+        let modalTotalAmount = document.getElementById("modalTotalAmount");
+        let selectedCategoryTitle = document.getElementById("selectedCategoryTitle");
+        let selectedCategoryTotal = document.getElementById("selectedCategoryTotal");
+
+        let totalExpense = document.getElementById("totalExpence"); 
+        let totalCategories = document.getElementById("totalCategories");
+         
+
+        let expenses = [];
+        let categories = [];
+
+        const addExpense = () => {
+            if(!title.value.trim()){alert("Please Enter Title");return;}
+            if(!amount.value.trim()){alert("Please Enter Amount");return;}
+            if(!category.value.trim()){alert("Please Enter Category");return;}
+
+            const expense = {
+                id:Date.now(),
+                title: title.value,
+                amount: amount.value,
+                category: category.value
+            }
+            let checkCategory = categories.filter((cat)=> cat == expense.category);
+            if(checkCategory.length === 0){
+                categories.push(expense.category);
+            }
+            expenses.push(expense);
+            console.log(expenses);
+            renderExpenses();
+            showTotal()
+        }
+
+         function renderExpenses(){
+            const expenseHTML = expenses.map((expense) => {
+                return `<div style="padding:10px; background-color:grey; color: white; display:flex; justify-content:center; align-items:center; flex-direction:column; width:400px; margin-top:5px; border-radius: 8px;">
+                            <div style="display:flex; justify-content:space-between; width:100%">
+                                <p><span style="color: #00ff00;">${expense.id.toString().slice(-4)}</span></p>
+                                <p>${expense.title}</p>
+                                <p>${expense.category}</p>
+                                <p>Rs${expense.amount}</p>
+                            </div>
+                        </div>`;
+            }).join('');
+            allExpenseList.innerHTML = expenseHTML;
+        }
+
+        function showTotal(){
+            let total = expenses.reduce((sum, currExp) => sum + parseFloat(currExp.amount), 0);
+            let totalCategoriesCount = categories.length;
+            document.getElementById("totalExpence").innerHTML = `<p style="font-weight: 700; color: green;">Total Expense: Rs${total}</p>`;
+            document.getElementById("totalCategories").innerHTML = `<p style="font-weight: 700; color: blue;">Total Categories: ${totalCategoriesCount}</p>`;
+            renderCategoryButtons();
+            renderModalTotals(total, totalCategoriesCount);
+        }
+
+        function renderCategoryButtons(){
+            if (!categories.length) {
+                categoryButtons.innerHTML = '<p style="color:#6b7280;">No categories yet.</p>';
+                selectedCategoryTitle.innerText = '';
+                selectedCategoryTotal.innerText = '';
+                categoryExpenses.innerHTML = '';
+                return;
+            }
+
+            categoryButtons.innerHTML = categories.map((cat) => {
+                return `<button class="categoryButton" type="button" onclick="showCategoryDetails('${cat.replace(/'/g, "\\'")}')">${cat}</button>`;
+            }).join('');
+
+            selectedCategoryTitle.innerText = '';
+            selectedCategoryTotal.innerText = '';
+            categoryExpenses.innerHTML = '';
+        }
+
+        function renderModalTotals(total, categoryCount){
+            modalTotalCategories.innerText = `Categories: ${categoryCount}`;
+            modalTotalAmount.innerText = `Total Expense: Rs${total}`;
+        }
+
+        function openCategoryModal(){
+            categoryModal.classList.add('active');
+            renderCategoryButtons();
+        }
+
+        function closeCategoryModal(event){
+            if (event && event.target !== categoryModal) return;
+            categoryModal.classList.remove('active');
+        }
+
+        function showCategoryDetails(categoryName){
+            const categoryExpensesList = expenses.filter(exp => exp.category === categoryName);
+            const categoryTotal = categoryExpensesList.reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
+
+            selectedCategoryTitle.innerText = `Category: ${categoryName}`;
+            selectedCategoryTotal.innerText = `Category Total: Rs${categoryTotal}`;
+            categoryExpenses.innerHTML = categoryExpensesList.map(exp => {
+                return `<div class="category-expense-item">
+                            <p>${exp.title}</p>
+                            <p>${exp.category}</p>
+                            <p>Rs${exp.amount}</p>
+                        </div>`;
+            }).join('');
+        }
+
+
+    </script>
+</body>
+</html>
