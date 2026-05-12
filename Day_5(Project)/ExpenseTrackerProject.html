@@ -198,7 +198,6 @@
         </div>
     </div>
     <script>
-        let Eid = document.getElementById("id"); // Note: No element with id="id" exists
         let title = document.getElementById("title");
         let amount = document.getElementById("amount");
         let category = document.getElementById("category");
@@ -274,7 +273,8 @@
             }
 
             categoryButtons.innerHTML = categories.map((cat) => {
-                return `<button class="categoryButton" type="button" onclick="showCategoryDetails('${cat.replace(/'/g, "\\'")}')">${cat}</button>`;
+                console.log(cat.replace(/'/g, "\\'"));
+                return `<button class="categoryButton" type="button" onclick="showCategoryDetails('${cat}')">${cat}</button>`;
             }).join('');
 
             selectedCategoryTitle.innerText = '';
