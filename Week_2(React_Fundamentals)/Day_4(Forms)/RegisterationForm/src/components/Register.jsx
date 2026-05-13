@@ -59,13 +59,13 @@ export default function RegisterationForm(){
         <>
         <div style={{display:"flex", flexDirection:'column'}}>
            <h1 style={{alignSelf:"center"}}>Registeration Form</h1>
-           <input onChange={handleChange} type="text" name="name" value={name} style={inputStyles}  />
+           <input onChange={handleChange} type="text" name="name" value={name} style={inputStyles} placeholder="Enter a Name"  />
            {error.name && <p style={{ color: 'red', alignSelf: 'center',padding:0, margin:0 }}>{error.name}</p>}
-           <input onChange={handleChange} type="email" name="email" value={email} style={inputStyles} />
+           <input onChange={handleChange} type="email" name="email" value={email} style={inputStyles} placeholder="Enter an Email" />
            {error.email && <p style={{ color: 'red', alignSelf: 'center',padding:0, margin:0 }}>{error.email}</p>}
-           <input onChange={handleChange} type="password" name="password" value={password} style={inputStyles} />
+           <input onChange={handleChange} type="password" name="password" value={password} style={inputStyles} placeholder="Enter a Password" />
            {error.password && <p style={{ color: 'red', alignSelf: 'center',padding:0, margin:0 }}>{error.password}</p>}
-           <input onChange={handleChange} type="password" name="confirmPassword" value={confirmPassword} style={inputStyles} />
+           <input onChange={handleChange} type="password" name="confirmPassword" value={confirmPassword} style={inputStyles} placeholder="Enter a Confirm Password" />
             {error.confirmPassword && <p style={{ color: 'red', alignSelf: 'center',padding:0, margin:0 }}>{error.confirmPassword}</p>}
             <button onClick={handleSubmit} type="submit" style={buttonstyles}>Register</button>
         </div> 
