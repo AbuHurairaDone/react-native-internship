@@ -21,7 +21,7 @@ export default function Index() {
           style={[styles.input, focused == "email" && styles.focusedInput]}
           value={email}
           onChangeText={setEmail}
-          onFocus={()=>setFocused("email")}
+          onFocus={() => setFocused("email")}
           onBlur={() => setFocused("")}
         />
         <TextInput 
@@ -29,7 +29,7 @@ export default function Index() {
           style={[styles.input, focused == "password" && styles.focusedInput]}
           value={password}
           onChangeText={setPassword}
-          onFocus={()=>setFocused("password")}
+          onFocus={() => setFocused("password")}
           onBlur={() => setFocused("")}
 
         />
@@ -38,7 +38,7 @@ export default function Index() {
           style={[styles.input, focused == "confirmPassword" && styles.focusedInput]}
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          onFocus={()=>setFocused("confirmPassword")}
+          onFocus={() => setFocused("confirmPassword")}
           onBlur={() => setFocused("")}
         />
       </View>
@@ -47,7 +47,7 @@ export default function Index() {
           <Text style={styles.buttonInput}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-      
+
     </SafeAreaView>
   );
 }
