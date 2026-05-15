@@ -29,6 +29,7 @@ export default function Index() {
         });
 
       setContacts(data);
+      
 
     } else {
       console.log("Access Denied");

@@ -1,0 +1,28 @@
+export const lightTheme = {
+  mode: "light",
+  background: "#FFFFFF",
+  primary: "#6C63FF",
+  text: "#111827",
+  title: "#000000",
+  subtitle: "#6B7280",
+  inputBackground: "#F9FAFB",
+  inputText: "#111827",
+  placeholder: "#9CA3AF",
+  border: "#E5E7EB",
+  card: "#F3F4F6",
+  buttonText: "#FFFFFF",
+};
+export const darkTheme = {
+  mode: "dark",
+  background: "#111827",
+  primary: "#6C63FF",
+  text: "#FFFFFF",
+  title: "#F9FAFB",
+  subtitle: "#9CA3AF",
+  inputBackground: "#1F2937",
+  inputText: "#FFFFFF",
+  placeholder: "#6B7280",
+  border: "#374151",
+  card: "#1F2937",
+  buttonText: "#FFFFFF",
+};
